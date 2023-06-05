@@ -7,23 +7,21 @@
  * Return: 1 if the list has a cycle, 0 if it doesn't
  */
 
+
 int check_cycle(listint_t *list)
 {
-listint_t *current = list;
-listint_t *runner = list;
+listint_t *p1, *p2;
 
-if (list == NULL || list->next == NULL)
-return (0);
+p1 = list;
+p2 = list;
 
-while (current != NULL && runner != NULL && runner->next
-!= NULL)
+while (p1 && p2 && p2->next)
 {
-if (current == runner)
+p1 = p1->next;
+p2 = p2->next->next;
+
+if (p1 == p2)
 return (1);
-current = current->next;
-runner = runner->next->next;
-
-
 }
 
 return (0);
