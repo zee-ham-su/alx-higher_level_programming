@@ -6,6 +6,7 @@
  *
  * Return: 1 if the list has a cycle, 0 if it doesn't
  */
+
 int check_cycle(listint_t *head)
 {
 listint_t *current = head;
@@ -14,7 +15,8 @@ listint_t *runner = head;
 if (!head)
 return (0);
 
-while (current && runner && runner->next)
+while (current != NULL && runner != NULL && runner->next
+!= NULL)
 {
 if (current == runner)
 return (1);
