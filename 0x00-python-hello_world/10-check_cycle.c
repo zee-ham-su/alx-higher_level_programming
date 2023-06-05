@@ -2,7 +2,7 @@
 
 /**
  * check_cycle - checks if a linked list contains a cycle
- * @head: pointer to the head of the linked list
+ * @list: pointer to the head of the linked list
  *
  * Return: 1 if the list has a cycle, 0 if it doesn't
  */
