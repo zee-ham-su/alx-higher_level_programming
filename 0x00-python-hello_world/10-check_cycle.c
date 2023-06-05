@@ -7,12 +7,12 @@
  * Return: 1 if the list has a cycle, 0 if it doesn't
  */
 
-int check_cycle(listint_t *head)
+int check_cycle(listint_t *list)
 {
-listint_t *current = head;
-listint_t *runner = head;
+listint_t *current = list;
+listint_t *runner = list;
 
-if (!head)
+if (list == NULL || list->next == NULL)
 return (0);
 
 while (current != NULL && runner != NULL && runner->next
