@@ -1,10 +1,9 @@
 #!/usr/bin/python3
-def print_ascii_alphabet_in_reverse():
-    for i in range(122, 96, -1):
-        if i % 2 == 0:
-            print(chr(i).lower(), end="")
-        else:
-            print(chr(i).upper(), end="")
+output_str = ""
+for i in range(122, 96, -1):
+    if i % 2 == 0:
+        output_str += chr(i)
+    else:
+        output_str += chr(i - 32)
 
-
-print_ascii_alphabet_in_reverse()
+print(output_str, end="")
