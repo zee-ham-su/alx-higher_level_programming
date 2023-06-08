@@ -6,10 +6,10 @@ if __name__ == "__main__":
 
     total_sum = add(a, b)
     total_sub = sub(a, b)
-    total_mul = sub(a, b)
+    total_mul = mul(a, b)
     total_div = div(a, b)
 
-    print('{:d} + {:d} = {:d}'.format(a, b, total_sum))
-    print('{:d} - {:d} = {:d}'.format(a, b, total_sub))
+    print("{} + {} = {}".format(a, b, total_sum))
+    print("{} - {} = {}".format(a, b, total_sub))
     print("{} * {} = {}".format(a, b, total_mul))
     print("{} / {} = {}".format(a, b, total_div))
