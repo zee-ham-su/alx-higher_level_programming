@@ -1,73 +1,47 @@
 #include <stddef.h>
 #include "lists.h"
 
-listint_t *reverse_listint(listint_t **head);
-int is_palindrome(listint_t **head);
-
 /**
- * reverse_listint - Reverses a singly-linked listint_t list.
- * @head: A pointer to the starting node of the list to reverse.
+ * is_palindrome - Checks if a singly linked list of integers is a palindrome.
+ * @head: A double pointer to the head of the linked list.
  *
- * Return: A pointer to the head of the reversed list.
- */
-listint_t *reverse_listint(listint_t **head)
-{
-	listint_t *node = *head, *next, *prev = NULL;
-
-	while (node)
-	{
-		next = node->next;
-		node->next = prev;
-		prev = node;
-		node = next;
-	}
-
-	*head = prev;
-	return (*head);
-}
-
-/**
- * is_palindrome - Checks if a singly linked list is a palindrome.
- * @head: A pointer to the head of the linked list.
- *
- * Return: If the linked list is not a palindrome - 0.
- *         If the linked list is a palindrome - 1.
+ * Return: 1 if the list is a palindrome, 0 otherwise.
  */
 int is_palindrome(listint_t **head)
 {
-	listint_t *tmp, *rev, *mid;
-	size_t size = 0, i;
-
-	if (*head == NULL || (*head)->next == NULL)
+	if (*head == NULL)
 		return (1);
 
-	tmp = *head;
-	while (tmp)
+	listint_t *slow_ptr = *head;
+	listint_t *fast_ptr = *head;
+
+	while (fast_ptr != NULL && fast_ptr->next != NULL)
 	{
-		size++;
-		tmp = tmp->next;
+		slow_ptr = slow_ptr->next;
+		fast_ptr = fast_ptr->next->next;
 	}
 
-	tmp = *head;
-	for (i = 0; i < (size / 2) - 1; i++)
-		tmp = tmp->next;
+	listint_t *prev_ptr = NULL;
+	listint_t *curr_ptr = slow_ptr->next;
 
-	if ((size % 2) == 0 && tmp->n != tmp->next->n)
-		return (0);
-
-	tmp = tmp->next->next;
-	rev = reverse_listint(&tmp);
-	mid = rev;
-
-	tmp = *head;
-	while (rev)
+	while (curr_ptr != NULL)
 	{
-		if (tmp->n != rev->n)
+		listint_t *next_ptr = curr_ptr->next;
+
+		curr_ptr->next = prev_ptr;
+		prev_ptr = curr_ptr;
+		curr_ptr = next_ptr;
+	}
+
+	listint_t *first_ptr = *head;
+
+	while (prev_ptr != NULL)
+	{
+		if (first_ptr->n != prev_ptr->n)
 			return (0);
-		tmp = tmp->next;
-		rev = rev->next;
+		first_ptr = first_ptr->next;
+		prev_ptr = prev_ptr->next;
 	}
-	reverse_listint(&mid);
 
 	return (1);
 }
