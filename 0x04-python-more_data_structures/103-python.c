@@ -5,6 +5,7 @@
  * print_python_list - Prints information about a Python list
  * @p: PyObject pointer to the Python list
  */
+
 void print_python_list(PyObject *p)
 {
 Py_ssize_t list_size, i;
@@ -29,25 +30,25 @@ print_python_bytes(list_item);
   */
 
 void print_python_bytes(PyObject *p)
-		 {
-	Py_ssize_t bytes_size, i;
-	char *bytes_string;
+{
+Py_ssize_t bytes_size, i;
+char *bytes_string;
 
-	printf("[.] bytes object info\n");
-	if (!PyBytes_Check(p))
-	  {
-	    printf("  [ERROR] Invalid Bytes Object\n");
-	    return;
-	  }
+printf("[.] bytes object info\n");
+if (!PyBytes_Check(p))
+{
+printf("  [ERROR] Invalid Bytes Object\n");
+return;
+}
 
-	bytes_size = PyBytes_Size(p);
-	bytes_string = PyBytes_AsString(p);
+bytes_size = PyBytes_Size(p);
+bytes_string = PyBytes_AsString(p);
 
-	printf("  size: %zd\n", bytes_size);
-	printf("  trying string: %s\n", bytes_string);
+printf("  size: %zd\n", bytes_size);
+printf("  trying string: %s\n", bytes_string);
 
-	printf("  first %zd bytes:", bytes_size + 1 > 10 ? 10 : bytes_size + 1);
-	for (i = 0; i < bytes_size + 1 && i < 10; i++)
-	  printf(" %02hhx", bytes_string[i]);
-	printf("\n");
-      }
+printf("  first %zd bytes:", bytes_size + 1 > 10 ? 10 : bytes_size + 1);
+for (i = 0; i < bytes_size + 1 && i < 10; i++)
+printf(" %02hhx", bytes_string[i]);
+printf("\n");
+}
