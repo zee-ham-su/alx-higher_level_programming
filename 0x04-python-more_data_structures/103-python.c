@@ -16,7 +16,7 @@ long int length, i, limit;
 
 printf("[.] bytes object info\n");
 
-if (Py_TYPE(p) != &PyBytes_Type)
+if (!PyBytes_Check(p))
 {
 printf("  [ERROR] Invalid Bytes Object\n");
 return;
