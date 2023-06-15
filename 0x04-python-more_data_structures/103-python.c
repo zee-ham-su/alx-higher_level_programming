@@ -13,7 +13,7 @@ void print_python_bytes(PyObject *p)
   long int length, i, limit;
 
   printf("[.] bytes object info\n");
-  if (!PyBytes_Check(p))
+  if (PyBytes_Check(p) == 0)
     {
       printf("  [ERROR] Invalid Bytes Object\n");
       return;
@@ -24,7 +24,15 @@ void print_python_bytes(PyObject *p)
 
   printf("  size: %ld\n", length);
   printf("  trying string: %s\n", str);
-  limit = length < 10 ? length : 10;
+ 
+  
+  if (length >= 10)
+    {
+      limit = 10;
+    }
+  else
+    limit = 1 + length;
+
   printf("  first %ld bytes:", limit);
 
   for (i = 0; i < limit; i++)
@@ -46,18 +54,18 @@ void print_python_bytes(PyObject *p)
  */
 void print_python_list(PyObject *p)
 {
-  long int size, i;
+  long int length, i;
   PyListObject *list;
   PyObject *obj;
 
-  size = ((PyVarObject *)(p))->ob_size;
+  length = ((PyVarObject *)(p))->ob_size;
   list = (PyListObject *)p;
 
   printf("[*] Python list info\n");
-  printf("[*] Size of the Python List = %ld\n", size);
+  printf("[*] Size of the Python List = %ld\n", length);
   printf("[*] Allocated = %ld\n", list->allocated);
 
-  for (i = 0; i < size; i++)
+  for (i = 0; i < length; i++)
     {
       obj = ((PyListObject *)p)->ob_item[i];
       printf("Element %ld: %s\n", i, ((obj)->ob_type)->tp_name);
