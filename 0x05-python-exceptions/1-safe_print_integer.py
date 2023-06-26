@@ -2,8 +2,9 @@
 
 def safe_print_integer(value):
     try:
-        print("{:d}".format(value))
+        print("{:d}".format(int(value)))
         return True
-    except Exception as e:
-        exception_types = {ValueError: False, TypeError: False}
-        return exception_types.get(type(e), True)
+    except ValueError:
+        return False
+    except TypeError:
+        return False
