@@ -5,9 +5,13 @@ import sys
 
 def safe_print_integer_err(value):
     try:
-        int_value = int(value)
-        print("{:d}".format(int_value))
+        converted_value = int(value)
+        print("{:d}".format(converted_value))
         return True
     except ValueError:
-        print("Exception: Value is not an integer", file=sys.stderr)
+        type_name = type(value).__name__
+        error_message = (
+            "Exception: Unknown format code 'd' for object of type '{}'"
+        )
+        print(error_message.format(type_name), file=sys.stderr)
         return False
