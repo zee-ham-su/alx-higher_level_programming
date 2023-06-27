@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 """
 Module: 2-square.py
-Defines a class Square that represents a square.
+Defines class Square which represents a square.
 """
 
 
 class Square:
     """
-    Represents a square.
+    defines a square.
     """
 
     def __init__(self, size=0):
