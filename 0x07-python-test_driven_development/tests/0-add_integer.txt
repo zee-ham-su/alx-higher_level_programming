@@ -1,0 +1,5 @@
+The ``0-add_integer`` test module
+
+
+The add_integer module is used to calculate the sum of two integers or floats.
+
