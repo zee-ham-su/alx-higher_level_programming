@@ -3,3 +3,86 @@ The ``0-add_integer`` test module
 
 The add_integer module is used to calculate the sum of two integers or floats.
 
+Usage
+
+To import the function from the module:
+>>> add_integer = import('add_integer').add_integer
+
+Test Case 1:Adding two positive integers (0 + 0)
+    >>> add_integer(0, 0)
+    Expected Output: 0
+
+Test Case 2: Adding one positive and one negative integer (7 + -3)
+    >>> add_integer(7, -3)
+    Expected Output: 4
+
+Test Case 3: Adding two negative integers (-5 + -2)
+    >>> add_integer(-5, -2)
+    Expected Output: -7
+
+Test Case 4: Adding two integers with the second being the same as the default value of b (8 + 100)
+     >>> add_integer(8)
+     Expected Output: 108
+
+Test Case 5: Adding a positive float and a negative integer (10.2 + -2)
+     >>> add_integer(10.2, -2)
+     Expected Output: 8
+
+Test Case 6: Adding two negative floats (-3.5 + -2.5)
+     >>> add_integer(-3.5, -2.5)
+     Expected Output: -6
+
+Test Case 7: Adding a positive float and a positive integer (2.7 + 3)
+     >>> add_integer(2.7, 3)
+     Expected Output: 5
+
+Test Case 8: Adding a float and an integer where the integer is equal to the default value of b (4.9 + 98)
+     >>> add_integer(4.9)
+     Expected Output: 102
+
+Test Case 9: Adding an integer number and a string (5 + "School")
+     >>> add_integer(5, "School")
+     Expected Output: TypeError: b must be an integer
+
+Test Case 10: Passing no argument to the function
+     >>> add_integer()
+     Expected Output: TypeError: add_integer() missing 1 required positional argument: 'a'
+
+
+Test Case 11: Adding two float numbers (1.8 + 4.5)
+     >>> add_integer(1.8, 4.5)
+     Expected Output: 6
+
+Test Case 12: Adding two letters ('c' + 'm')
+     >>> add_integer('c', 'm')
+     Expected Output: TypeError: a must be an integer
+
+Test Case 13: Adding a tuple
+     >>> add_integer((1, 1))
+     Expected Output: TypeError: a must be an integer
+
+Test Case 14: Adding a number and a list (123 + [])
+     >>> add_integer(123, [])
+    Expected Output: TypeError: b must be an integer
+
+
+Test Case 15: Adding a letter and a number ('c' + 1)
+     >>> add_integer('c', 1)
+     Expected Output: TypeError: a must be an integer
+
+Test Case 16: Overflow case 2 (float('inf') + float('-inf'))
+     >>> add_integer(float('inf'), float('-inf'))
+     Expected Output: OverflowError: cannot convert float infinity to integer
+
+Test Case 17: Overflow case 1 (float('inf') + 0)
+     >>> add_integer(float('inf'), 0)
+     Expected Output: OverflowError: cannot convert float infinity to integer
+
+Test Case 18: NaN case 1 (0 + float('nan'))
+     >>> add_integer(0, float('nan'))
+     Expected Output: ValueError: cannot convert float NaN to integer
+
+Test Case 19: NaN case 2:
+     >>> add_integer(float('nan'))
+     Traceback (most recent call last):
+    	    ValueError: cannot convert float NaN to integer
