@@ -15,29 +15,25 @@
 
 void print_python_string(PyObject *p)
 {
-/* Check if the object is a string */
-if (!PyUnicode_Check(p))
+
+PyObject *str, *repr;
+
+(void)repr;
+printf("[.] string object info\n");
+
+if (strcmp(p->ob_type->tp_name, "str"))
 {
-printf("Error: Object is not a valid string.\n");
+printf("  [ERROR] Invalid String Object\n");
 return;
 }
-/* Get the string value from the object */
-PyObject *strValue = PyUnicode_AsUTF8String(p);
-if (strValue == NULL)
-{
-printf("Error: Failed to get string value.\n");
-return;
-}
-/* Get the C string pointer from the string value */
-const char *cStr = PyBytes_AsString(strValue);
-if (cStr == NULL)
-{
-printf("Error: Failed to get C string.\n");
-Py_DECREF(strValue);
-return;
-}
-/* Print the string */
-printf("%s\n", cStr);
-/* Cleanup */
-Py_DECREF(strValue);
+
+if (PyUnicode_IS_COMPACT_ASCII(p))
+printf("  type: compact ascii\n");
+else
+printf("  type: compact unicode object\n");
+
+repr = PyObject_Repr(p);
+str = PyUnicode_AsEncodedString(p, "utf-8", "~E~");
+printf("  length: %ld\n", PyUnicode_GET_SIZE(p));
+printf("  value: %s\n", PyBytes_AsString(str));
 }
