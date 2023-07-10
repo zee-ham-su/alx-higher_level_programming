@@ -1,12 +1,15 @@
 Test module for 7-base_geometry
 
+
 Importing the function from the module:
         >>> BG = __import__("7-base_geometry").BaseGeometry
+
 
 Checking for module docstring:
          >>> m = __import__("7-base_geometry").__doc__
          >>> len(m) > 1
          True
+
 
 Checking for method docstring:
 	  >>> mod1 = __import__("7-base_geometry").BaseGeometry.area.__doc__
@@ -16,17 +19,19 @@ Checking for method docstring:
           >>> len(mod2) > 1
           True
 
+
 Checking for class docstring:
          >>> c = __import__("7-base_geometry").BaseGeometry.__doc__
          >>> len(c) > 1
          True
+
+
 Passing two arguments to area method
     >>> bg = BaseGeometry()
     >>> bg.area(5, 5)
     Traceback (most recent call last):
     	      ...
     TypeError: area() takes 1 positional argument but 3 were given
-
 
 
 Passing one argument to area method
@@ -61,7 +66,6 @@ Trying to pass a non-integer argument
     TypeError: name must be an integer
 
 
-
 Trying to pass a negative value
     >>> bg = BaseGeometry()
     >>> bg.integer_validator("name", -5)
@@ -78,15 +82,12 @@ Integer_validator with no arguments
     TypeError: integer_validator() missing 2 required positional arguments: 'name' and 'value'
 
 
-
-
 Passing one argument to integer_validator
     >>> bg = BaseGeometry()
     >>> bg.integer_validator("name")
     Traceback (most recent call last):
     	      ...
     TypeError: integer_validator() missing 1 required positional argument: 'value'
-
 
 
 Passing tuple to method
@@ -96,12 +97,14 @@ Passing tuple to method
     	      ...
     TypeError: age must be an integer
 
+
 Passing None to method
     >>> bg = BaseGeometry()
     >>> bg.integer_validator("age", None)
     Traceback (most recent call last):
               ...
     TypeError: age must be an integer
+
 
 Passing dict to method
     >>> bg = BaseGeometry()
