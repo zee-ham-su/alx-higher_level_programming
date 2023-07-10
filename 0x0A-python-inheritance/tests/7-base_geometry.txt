@@ -24,12 +24,13 @@ Checking for class docstring:
          True
 
 
-Passing two arguments to area method
-    >>> bg = BaseGeometry()
-    >>> bg.area(5, 5)
-    Traceback (most recent call last):
-    	      ...
-    TypeError: area() takes 1 positional argument but 3 were given
+>>> bg = BaseGeometry()
+>>> try:
+...     bg.area(5, 5)
+... except TypeError as e:
+...     assert str(e) == "area() takes 1 positional argument but 3 were given"
+... else:
+...     raise AssertionError("Expected TypeError was not raised")
 
 
 Passing one argument to area method
@@ -39,13 +40,21 @@ Passing one argument to area method
     	      ...
     TypeError: area() takes 1 positional argument but 2 were given
 
+>>> bg = BaseGeometry()
+>>> try:
+...     bg.area(5, 5)
+... except TypeError as e:
+...     assert str(e) == "area() takes 1 positional argument but 3 were given"
+... else:
+...     raise AssertionError("Expected TypeError was not raised")
 
-Trying to print the area
-    >>> bg = BaseGeometry()
-    >>> bg.area()
-    Traceback (most recent call last):
-    	      ...
-    Exception: area() is not implemented
+>>> bg = BaseGeometry()
+>>> try:
+...     bg.area()
+... except Exception as e:
+...     assert str(e) == "area() is not implemented"
+... else:
+...     raise AssertionError("Expected Exception was not raised")
 
 
 Trying:
