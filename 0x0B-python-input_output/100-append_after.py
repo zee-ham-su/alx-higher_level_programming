@@ -5,15 +5,20 @@ containing a specific string
 
 
 def append_after(filename="", search_string="", new_string=""):
-    """Inserts text before each line containing a given string in
-    a file
-    """
-    lines = []
-    with open(filename) as file:
-        for line in file:
-            if search_string in line:
-                lines.append(new_string)
-            lines.append(line)
+    """ Function that appends a new line when a string is found
 
-    with open(filename, "w") as file:
-        file.writelines(lines)
+    Args:
+        filename: filename
+        search_string: string to search
+        new_string: string to append
+
+    """
+
+    with open(filename, 'r+', encoding="utf-8") as f:
+        lines = f.readlines()
+        for i, line in enumerate(lines):
+            if search_string in line:
+                lines.insert(i + 1, new_string + "\n")
+                break
+        f.seek(0)
+        f.writelines(lines)
