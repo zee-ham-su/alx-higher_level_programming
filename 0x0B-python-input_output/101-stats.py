@@ -1,17 +1,9 @@
 #!/usr/bin/python3
-"""Reads from standard input and computes metrics.
-"""
-
-
-import sys
+"""Reads from standard input and computes metrics."""
 
 
 def print_stats(size, status_codes):
     """Print accumulated metrics.
-
-    Args:
-        size (int): The accumulated read file size.
-        status_codes (dict): The accumulated count of status codes.
     """
     print("File size: {}".format(size))
     for key in sorted(status_codes):
@@ -24,27 +16,36 @@ def main():
     valid_codes = ['200', '301', '400', '401', '403', '404', '405', '500']
     count = 0
 
-    for line in sys.stdin:
-        line = line.split()
+    try:
+        import sys
+        for line in sys.stdin:
+            if count == 10:
+                print_stats(size, status_codes)
+                count = 1
+            else:
+                count += 1
 
-        try:
-            size += int(line[-1])
-        except (IndexError, ValueError):
-            pass
+            line = line.split()
 
-        try:
-            if line[-2] in valid_codes:
-                status_codes[line[-2]] = status_codes.get(line[-2], 0) + 1
-        except IndexError:
-            pass
+            try:
+                size += int(line[-1])
+            except (IndexError, ValueError):
+                pass
 
-        if count == 10:
-            print_stats(size, status_codes)
-            count = 0
-        else:
-            count += 1
+            try:
+                if line[-2] in valid_codes:
+                    if status_codes.get(line[-2], -1) == -1:
+                        status_codes[line[-2]] = 1
+                    else:
+                        status_codes[line[-2]] += 1
+            except IndexError:
+                pass
 
-    print_stats(size, status_codes)
+        print_stats(size, status_codes)
+
+    except KeyboardInterrupt:
+        print_stats(size, status_codes)
+        raise
 
 
 if __name__ == "__main__":
