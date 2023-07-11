@@ -1,47 +1,29 @@
 #!/usr/bin/python3
 """Add all arguments to a Python list and save them to a file."""
-
-import json
 import sys
+import json
 
 
-def save_to_json_file(items, filename):
-    """Save the list of items to a file in JSON format.
-
-    Args:
-        items: The list of items to save.
-        filename: The filename to save the items to.
+def save_to_json_file(my_obj, filename):
     """
-
-    with open(filename, "w") as f:
-        json.dump(items, f)
+    writes an Object to a text file, using a JSON representation
+    """
+    with open(filename, 'w', encoding='utf-8') as file:
+        json.dump(my_obj, file)
 
 
 def load_from_json_file(filename):
-    """Load the list of items from a file in JSON format.
-
-    Args:
-        filename: The filename to load the items from.
-
-    Returns:
-        The list of items that were loaded from the file.
-    """
-
-    with open(filename, "r") as f:
-        items = json.load(f)
-    return items
+    """creates an object from a “JSON file”"""
+    with open(filename, 'r', encoding='utf-8') as file:
+        return json.load(file)
 
 
-def main():
-    """Add all arguments to a Python list and save them to a file.
-    """
+try:
+    my_list = load_from_json_file("add_item.json")
+except FileNotFoundError:
+    my_list = []
 
-    items = []
-    for arg in sys.argv[1:]:
-        items.append(arg)
+for arg in sys.argv[1:]:
+    my_list.append(arg)
 
-    save_to_json_file(items, "add_item.json")
-
-
-if __name__ == "__main__":
-    main()
+save_to_json_file(my_list, "add_item.json")
