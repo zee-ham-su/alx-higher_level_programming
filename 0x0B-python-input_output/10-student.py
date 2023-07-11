@@ -16,8 +16,11 @@ class Student:
         self.age = age
 
     def to_json(self, attrs=None):
-        """ Method that returns directory description """
-        if attrs is None:
+        if attrs is None or not isinstance(attrs, list):
             return self.__dict__
         else:
-            return {k: v for k, v in self.__dict__.items() if k in attrs}
+            selected_attrs = {}
+            for attr in attrs:
+                if attr in self.__dict__:
+                    selected_attrs[attr] = self.__dict__[attr]
+            return selected_attrs
