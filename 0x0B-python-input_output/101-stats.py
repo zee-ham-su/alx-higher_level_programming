@@ -1,22 +1,20 @@
 #!/usr/bin/python3
-"""script that reads stdin line by line and computes metrics
-"""
-
+"""script that reads stdin line by line and computes metrics"""
 
 import sys
-from collections import Counter
 
 
 def print_stats(size, status_codes):
     """Print accumulated metrics"""
-    print("Total file size:", size)
-    for code, count in sorted(status_codes.items()):
-        print(code + ":", count)
+    print("File size:", size)
+    for code in sorted(status_codes):
+        print(code + ":", status_codes[code])
 
 
 lines = []
-valid_codes = {'200', '301', '400', '401', '403', '404', '405', '500'}
+valid_codes = ['200', '401', '403', '404', '405', '500']
 line_count = 0
+status_codes = {}
 
 try:
     for line in sys.stdin:
@@ -25,13 +23,21 @@ try:
 
         if line_count % 10 == 0:
             size = sum(int(line[-1]) for line in lines)
-            status_codes = Counter(line[-2] for line in lines
-                                   if line[-2] in valid_codes)
+            for line in lines:
+                if line[-2] in valid_codes:
+                    if line[-2] not in status_codes:
+                        status_codes[line[-2]] = 1
+                    else:
+                        status_codes[line[-2]] += 1
             print_stats(size, status_codes)
             lines = []
 
 except KeyboardInterrupt:
     size = sum(int(line[-1]) for line in lines)
-    status_codes = Counter(line[-2] for line in lines if line[-2]
-                           in valid_codes)
+    for line in lines:
+        if line[-2] in valid_codes:
+            if line[-2] not in status_codes:
+                status_codes[line[-2]] = 1
+            else:
+                status_codes[line[-2]] += 1
     print_stats(size, status_codes)
