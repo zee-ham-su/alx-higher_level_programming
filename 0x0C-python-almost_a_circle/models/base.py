@@ -2,6 +2,7 @@
 """a base model class module
 """
 import json
+import csv
 
 
 class Base:
@@ -67,6 +68,38 @@ class Base:
                 json_data = file.read()
                 obj_dicts = cls.from_json_string(json_data)
                 instances = [cls.create(**obj_dict) for obj_dict in obj_dicts]
+                return instances
+        except FileNotFoundError:
+            return []
+
+    @classmethod
+    def save_to_file_csv(cls, list_objs):
+        """Serializes instances to CSV file"""
+        filename = cls.__name__ + ".csv"
+        with open(filename, 'w', newline='') as file:
+            writer = csv.writer(file)
+            for obj in list_objs:
+                if cls.__name__ == "Rectangle":
+                    row = [obj.id, obj.width, obj.height, obj.x, obj.y]
+                elif cls.__name__ == "Square":
+                    row = [obj.id, obj.size, obj.x, obj.y]
+                writer.writerow(row)
+
+    @classmethod
+    def load_from_file_csv(cls):
+        """Deserializes instances from CSV file"""
+        filename = cls.__name__ + ".csv"
+        try:
+            with open(filename, 'r') as file:
+                reader = csv.reader(file)
+                instances = []
+                for row in reader:
+                    if cls.__name__ == "Rectangle":
+                        instance = cls(*map(int, row[1:]))
+                    elif cls.__name__ == "Square":
+                        instance = cls(*map(int, row[1:]))
+                    instance.id = int(row[0])
+                    instances.append(instance)
                 return instances
         except FileNotFoundError:
             return []
