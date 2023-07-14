@@ -7,11 +7,8 @@ from models.rectangle import Rectangle
 class Square(Rectangle):
     """ a class Sqaure"""
     def __init__(self, size, x=0, y=0, id=None):
+        """Constructor for Square class"""
         super().__init__(size, size, x, y, id)
-        self.size = size
-        self.x = x
-        self.y = y
-        self.id = None
 
     def __str__(self):
         """String representation of the Square instance.
@@ -25,7 +22,7 @@ class Square(Rectangle):
     @property
     def size(self):
         """retrieve the size of square"""
-        return self.__width
+        return self.width
 
     @size.setter
     def size(self, value):
@@ -34,5 +31,15 @@ class Square(Rectangle):
             raise TypeError("width must be an integer")
         if value <= 0:
             raise ValueError("width must be > 0")
-        self.__width = value
-        self.__height = value
+        self.width = value
+        self.height = value
+
+    def update(self, *args, **kwargs):
+        """assigns an argument to each attribute"""
+        if args:
+            attributes = ["id", "size", "x", "y"]
+            for att, value in zip(attributes, args):
+                setattr(self, att, value)
+        else:
+            for key, value in kwargs.items():
+                setattr(self, key, value)
