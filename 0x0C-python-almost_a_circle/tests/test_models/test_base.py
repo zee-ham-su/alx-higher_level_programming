@@ -42,19 +42,22 @@ class BaseTestCase(unittest.TestCase):
         json_string = Base.to_json_string([self.r.to_dictionary()])
         objects = Rectangle.from_json_string(json_string)
         self.assertEqual(len(objects), 1)
-        self.assertEqual(objects[0].id, self.r.id)
-        self.assertEqual(objects[0].width, self.r.width)
-        self.assertEqual(objects[0].height, self.r.height)
-        self.assertEqual(objects[0].x, self.r.x)
-        self.assertEqual(objects[0].y, self.r.y)
+        new_r = Rectangle.create(**objects[0])
+        self.assertEqual(new_r.id, self.r.id)
+        self.assertEqual(new_r.width, self.r.width)
+        self.assertEqual(new_r.height, self.r.height)
+        self.assertEqual(new_r.x, self.r.x)
+        self.assertEqual(new_r.y, self.r.y)
 
     def test_base_from_json_string_square(self):
         json_string = Base.to_json_string([self.s.to_dictionary()])
         objects = Square.from_json_string(json_string)
         self.assertEqual(len(objects), 1)
-        self.assertEqual(objects[0].size, self.s.size)
-        self.assertEqual(objects[0].x, self.s.x)
-        self.assertEqual(objects[0].y, self.s.y)
+        new_s = Square.create(**objects[0])
+        self.assertEqual(new_s.size, self.s.size)
+        self.assertEqual(new_s.x, self.s.x)
+        self.assertEqual(new_s.y, self.s.y)
+
 
     def test_base_create_rectangle(self):
         new_r = Rectangle.create(**self.r.to_dictionary())
