@@ -1,6 +1,7 @@
 #!/usr/bin/python3
-""" a script that lists all states with a name 
-starting with N (upper N) from the database hbtn_0e_0_usa
+"""  a script that takes in an argument and displays all
+values in the states table of hbtn_0e_0_usa where name
+matches the argument. That is safe from MySQL injections!
 """
 
 import MySQLdb
@@ -15,12 +16,14 @@ if __name__ == '__main__':
         db_cursor = db_connect.cursor()
 
         db_cursor.execute(
-            "SELECT * FROM states WHERE name LIKE 'N%' ORDER BY id")
+            "SELECT * FROM states WHERE name LIKE "
+            "BINARY %(name)s ORDER BY states.id ASC",
+            {'name': argv[4]})
 
-        rows = db_cursor.fetchall()
+        states = db_cursor.fetchall()
 
-        for row in rows:
-            print(row)
+        for state in states:
+            print(state)
 
         db_cursor.close()
         db_connect.close()

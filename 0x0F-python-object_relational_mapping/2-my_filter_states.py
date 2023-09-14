@@ -5,28 +5,31 @@ matches the argument.
 """
 
 import MySQLdb
-from sys import argv
+import sys  # Add this import
 
 if __name__ == '__main__':
     try:
-        db_connect = MySQLdb.connect(
-            host="localhost", user=argv[1], port=3306,
-            passwd=argv[2], db=argv[3])
+        if len(sys.argv) != 5:
+            print("Usage: {} username password database state_name".format(sys.argv[0]))
+        else:
+            db_connect = MySQLdb.connect(
+                host="localhost", user=sys.argv[1], port=3306,
+                passwd=sys.argv[2], db=sys.argv[3])
 
-        db_cursor = db_connect.cursor()
+            db_cursor = db_connect.cursor()
 
-        db_cursor.execute(
-            "SELECT * FROM states WHERE name LIKE "
-            "BINARY %(name)s ORDER BY states.id ASC",
-            {'name': argv[4]})
+            db_cursor.execute(
+                "SELECT * FROM states WHERE name LIKE "
+                "BINARY %s",
+                (sys.argv[4],))
 
-        states = db_cursor.fetchall()
+            states = db_cursor.fetchall()
 
-        for state in states:
-            print(state)
+            for state in states:
+                print(state)
 
-        db_cursor.close()
-        db_connect.close()
+            db_cursor.close()
+            db_connect.close()
 
     except MySQLdb.Error as e:
         print("MySQL Error:", e)
