@@ -9,17 +9,7 @@ from model_state import Base, State
 import sys
 
 if __name__ == '__main__':
-    if len(sys.argv) != 4:
-        print("Usage: {} <username> <password> <database>".format(
-            sys.argv[0]))
-        sys.exit(1)
-
-    username = sys.argv[1]
-    password = sys.argv[2]
-    database = sys.argv[3]
-
-    try:
-        engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'.
+    engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'.
                                format(username, password, database),
                                pool_pre_ping=True)
 
@@ -28,11 +18,9 @@ if __name__ == '__main__':
         session = Session()
 
         states = (session.query(State)
-                  .filter(State.name.like('%a%'))
-                  .order_by(State.id)
-                  .all())
+                  .filter(State.name.like('%a%'))          
 
-        if states:
+        if states is not None:
             for state in states:
                 print("{}: {}".format(state.id, state.name))
         else:
@@ -41,4 +29,4 @@ if __name__ == '__main__':
         session.close()
 
     except Exception as e:
-        print("Error:", e)
+            print("Error:", e)
