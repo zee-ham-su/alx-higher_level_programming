@@ -13,20 +13,21 @@ if __name__ == '__main__':
                                format(username, password, database),
                                pool_pre_ping=True)
 
-        Base.metadata.create_all(engine)
-        Session = sessionmaker(bind=engine)
-        session = Session()
 
-        states = (session.query(State)
-                  .filter(State.name.like('%a%'))          
+    Base.metadata.create_all(engine)
+    Session = sessionmaker(bind=engine)
+    session = Session()
 
-        if states is not None:
-            for state in states:
-                print("{}: {}".format(state.id, state.name))
-        else:
-            print("Nothing")
+    states = (session.query(State)
+            .filter(State.name.like('%a%'))          
 
-        session.close()
+    if states is not None:
+        for state in states:
+            print("{}: {}".format(state.id, state.name))
+    else:
+        print("Nothing")
+
+    session.close()
 
     except Exception as e:
-            print("Error:", e)
+        print("Error:", e)
