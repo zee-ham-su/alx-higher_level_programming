@@ -10,7 +10,9 @@ import sys  # Add this import
 if __name__ == '__main__':
     try:
         if len(sys.argv) != 5:
-            print("Usage: {} username password database state_name".format(sys.argv[0]))
+            print("Usage: {} username password database state_name"
+                  .format(sys.argv[0]))
+
         else:
             db_connect = MySQLdb.connect(
                 host="localhost", user=sys.argv[1], port=3306,
