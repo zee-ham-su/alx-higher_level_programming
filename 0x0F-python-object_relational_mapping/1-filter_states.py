@@ -14,12 +14,12 @@ if __name__ == '__main__':
     db_cursor = db_connect.cursor()
 
     db_cursor.execute("""SELECT * FROM states WHERE name
-                      LIKE 'N%' ORDER BY states.id""")
+                      LIKE BINARY 'N%' ORDER BY states.id""")
 
-    rows = db_cursor.fetchall()
+    states = db_cursor.fetchall()
 
-    for row in rows:
-        print(row)
+    for state in states:
+        print(state)
 
     db_cursor.close()
     db_connect.close()
