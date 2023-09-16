@@ -25,5 +25,5 @@ if __name__ == '__main__':
     cali_State.cities.append(sanfran_City)
 
     session.add(cali_State)
-    session.add(san_franCity)
     session.commit()
+    session.close()
