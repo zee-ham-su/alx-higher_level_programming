@@ -16,11 +16,12 @@ if __name__ == "__main__":
                            .format(sys.argv[1], sys.argv[2], sys.argv[3]))
     Base.metadata.create_all(engine)
     Session = sessionmaker(bind=engine)
+    session = Session()
 
-    with Session() as session:
-        states = session.query(State).order_by(State.id).all()
+    states = (session.query(State)
+              .outerjoin(City).order_by(State.id, City.id).all())
 
-        for state in states:
-            print("{}: {}".format(state.name, len(state.cities)))
-            for city in state.cities:
-                print("    {}: {}".format(city.id, city.name))
+    for state in states:
+        print("{}: {}".format(state.id, state.name))
+        for city in state.cities:
+            print("    {}: {}".format(city.id, city.name))
