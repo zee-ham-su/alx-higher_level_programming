@@ -15,10 +15,15 @@ if __name__ == "__main__":
 
     try:
         response = requests.get(url, auth=auth)
-        response.raise_for_status()
-        user_data = response.json()
-        user_id = user_data.get("id")
-        print(user_id if response.status_code == 200 else None)
+        if response.status_code == 200:
+            user_data = response.json()
+            user_id = user_data.get("id")
+            print(user_id)
+        elif response.status_code == 401:
+            print("None")
+        else:
+            print(f"Error: {response.status_code} Client Error")
+            response.raise_for_status()
 
     except requests.exceptions.RequestException as e:
         print("Error:", e)
