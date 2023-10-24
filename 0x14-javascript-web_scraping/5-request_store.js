@@ -1,13 +1,18 @@
 #!/usr/bin/node
+
 const request = require('request');
 const fs = require('fs');
+const sourceUrl = process.argv[2];
+const destinationFile = process.argv[3];
 
-const url = process.argv[2];
-const filePath = process.argv[3];
-
-request(url, (error, response, body) => {
-  if (error === null) {
-    fs.writeFileSync(filePath, body, 'utf-8');
-    console.log(`Successfully saved the content from ${url} to ${filePath}`);
+request(sourceUrl, (requestError, response, body) => {
+  if (requestError) {
+    console.log(requestError);
+  } else {
+    fs.writeFile(destinationFile, body, 'utf8', (writeError) => {
+      if (writeError) {
+        console.log(writeError);
+      }
+    });
   }
 });
